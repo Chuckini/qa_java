@@ -1,0 +1,43 @@
+package com.example;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+
+public class FelineTest {
+
+    // Given: есть объект Feline
+    Feline feline = new Feline();
+
+    @Test
+    public void shouldReturnPredatorFood_whenEatMeatCalled() throws Exception {
+
+        // When: вызываем eatMeat() Feline вызывает getFood("Хищник")
+        List<String> food = feline.eatMeat();
+
+        // Then: возвращается список еды хищника
+        assertEquals(List.of("Животные", "Птицы", "Рыба"), food);
+    }
+
+    @Test
+    public void shouldReturnFelineFamily_whenGetFamilyCalled() {
+        // When: вызываем getFamily()
+        String family = feline.getFamily();
+
+        // Then: возвращается "Кошачьи"
+        assertEquals("Кошачьи", family);
+    }
+
+    @Test
+    public void shouldReturnOneKitten_whenGetKittensCalled() {
+        // When: вызываем getKittens() без параметров (внутри вызывает getKittens(1))
+        int kittens = feline.getKittens();
+
+        // Then: по умолчанию возвращается 1
+        assertEquals(1, kittens);
+    }
+
+}
