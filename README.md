@@ -27,36 +27,36 @@
 
 ## 🛠 Технологии
 
-| Технология | Версия |
-|-----------|--------|
-| Java | 11 |
-| Maven | 3.x |
-| JUnit | 4.13.2 |
-| Mockito | 5.x |
-| JaCoCo | 0.8.7 |
-| IntelliJ IDEA | Community / Ultimate |
+![Java](https://img.shields.io/badge/Java-11-orange?style=for-the-badge&logo=openjdk&logoColor=white)
+![Maven](https://img.shields.io/badge/Maven-3.x-C71A36?style=for-the-badge&logo=apachemaven&logoColor=white)
+![JUnit](https://img.shields.io/badge/JUnit-4.13.2-25A162?style=for-the-badge&logo=junit&logoColor=white)
+![Mockito](https://img.shields.io/badge/Mockito-5.x-78A641?style=for-the-badge)
+![JaCoCo](https://img.shields.io/badge/JaCoCo-0.8.7-brightgreen?style=for-the-badge)
+
 
 ---
 
-## 📂 Структура проекта
+## 📁 Структура проекта
 
-qa_java
+```text
+
+qa_java/
 ├── pom.xml
 ├── README.md
 ├── .gitignore
-├── src
-│   ├── main
-│   │   └── java
-│   │       └── com.example
+├── src/
+│   ├── main/
+│   │   └── java/
+│   │       └── com/example/
 │   │           ├── Alex.java
 │   │           ├── Animal.java
 │   │           ├── Cat.java
 │   │           ├── Feline.java
 │   │           ├── Lion.java
 │   │           └── Predator.java
-│   └── test
-│       └── java
-│           └── com.example
+│   └── test/
+│       └── java/
+│           └── com/example/
 │               ├── AlexTest.java
 │               ├── AnimalParametrizedTest.java
 │               ├── AnimalTest.java
@@ -65,10 +65,10 @@ qa_java
 │               ├── FelineTest.java
 │               ├── LionParametrizedTest.java
 │               └── LionTest.java
-└── target
-└── site
-└── jacoco
-└── index.html
+└── target/
+    └── site/
+        └── jacoco/
+            └── index.html
 
 ---
 
