@@ -69,7 +69,7 @@ qa_java/
     └── site/
         └── jacoco/
             └── index.html
-
+```
 ---
 
 ## 🧪 Реализованные тесты
