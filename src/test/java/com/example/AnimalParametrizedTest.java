@@ -35,7 +35,7 @@ public class AnimalParametrizedTest {
     }
 
     @Test
-    public void shouldReturnFood_whenAnimalKindIsValid() throws Exception {
+    public void shouldReturnFoodWhenAnimalKindIsValid() throws Exception {
         // Given: есть Animal
         Animal animal = new Animal();
 

@@ -31,9 +31,9 @@ public class LionParametrizedTest {
     }
 
     @Test
-    public void shouldReturnCorrectManeValue_whenLionCreatedWithValidSex() throws Exception {
+    public void shouldReturnCorrectManeValueWhenLionCreatedWithValidSex() throws Exception {
         // Given: создаём льва с валидным полом
-        //  реальный Feline, потому что doesHaveMane() не зависит от него
+        // реальный Feline, потому что doesHaveMane() не зависит от него
         Feline feline = new Feline();
         Lion lion = new Lion(sex, feline);
 

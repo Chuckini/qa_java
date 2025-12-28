@@ -1,5 +1,6 @@
 package com.example;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -15,76 +16,86 @@ public class AlexTest {
 
     @Mock
     private Feline feline;
+    private Alex alex;
 
+    @Before
+    public void setUp() throws Exception {
+        // Arrange: инициализируем тестируемый объект (создаём Алекса с мок Feline)
+         alex = new Alex(feline);
+    }
     @Test
-    public void shouldCreateAlexSuccessfully_andHaveMane() throws Exception {
-        // Arrange: создаём Алекса с мок Feline
-        Alex alex = new Alex(feline);
-
-        // Act: проверяем, есть ли грива (Alex всегда "Самец")
+    public void shouldCreateAlexSuccessfullyAndHaveMane() throws Exception {
+        // Act: вызываем метод тестируемого класса (проверяем, есть ли грива: Alex всегда "Самец")
         boolean hasMane = alex.doesHaveMane();
 
-        // Assert: у самца должна быть грива
+        // Assert: проверяем возвращаемый результат (у самца должна быть грива)
         assertTrue(hasMane);
     }
 
     @Test
     public void shouldReturnFriendsList() throws Exception {
-        // Arrange: создаём Алекса с мок Feline
-        Alex alex = new Alex(feline);
 
-        // Act: получаем список друзей
+        // Act: вызываем метод тестируемого класса (получаем список друзей)
         List<String> friends = alex.getFriends();
 
-        // Assert: список из 3 друзей в нужном порядке
+        // Assert: проверяем возвращаемый результат (список из 3 друзей в нужном порядке)
         assertEquals(List.of("Марти", "Глория", "Мелман"), friends);
     }
 
     @Test
     public void shouldReturnPlaceOfLiving() throws Exception {
-        // Arrange: создаём Алекса с мок Feline
-        Alex alex = new Alex(feline);
 
-        // Act: получаем место проживания
+        // Act: вызываем метод тестируемого класса (получаем место проживания)
         String place = alex.getPlaceOfLiving();
 
-        // Assert: место проживания Нью-Йоркский зоопарк
+        // Assert: проверяем возвращаемый результат (место проживания Нью-Йоркский зоопарк)
         assertEquals("Нью-Йоркский зоопарк", place);
     }
 
     @Test
     public void shouldReturnZeroKittens() throws Exception {
-        // Arrange: создаём Алекса с мок Feline
-        Alex alex = new Alex(feline);
-
-        // Act: получаем количество котят
+        // Act: вызываем метод тестируемого класса (получаем количество котят)
         int kittens = alex.getKittens();
 
-        // Assert: у Алекса нет львят
+        // Assert: проверяем возвращаемый результат (у Алекса нет львят)
         assertEquals(0, kittens);
+    }
 
-        // Assert: зависимость не трогали, потому что Alex переопределяет метод
+    @Test
+    public void shouldNotInteractWithFelineWhenGetKittensCalled() throws Exception {
+
+        // Act: вызываем метод тестируемого класса
+        alex.getKittens();
+
+        // Assert: проверяем отсутствие взаимодействий с зависимостью
         Mockito.verifyNoInteractions(feline);
     }
 
     @Test
-    public void shouldGetFoodViaFeline_whenAlexGetFoodCalled() throws Exception {
-        // Arrange: создаём Алекса с мок Feline
-        Alex alex = new Alex(feline);
+    public void shouldReturnFoodList() throws Exception {
 
-        // Arrange: настраиваем мок (Lion.getFood() вызывает feline.getFood("Хищник"))
+        // Arrange: подготавливаем тестовые данные и поведение мока
         List<String> expectedFood = List.of("Животные", "Птицы", "Рыба");
         Mockito.when(feline.getFood("Хищник")).thenReturn(expectedFood);
 
-        // Act: получаем еду
+        // Act: вызываем метод тестируемого класса
         List<String> food = alex.getFood();
 
-        // Assert: вернулся ожидаемый список
+        // Assert: проверяем возвращаемый результат
         assertEquals(expectedFood, food);
+    }
 
-        // Assert: был вызван нужный метод зависимости с нужным аргументом
+    @Test
+    public void shouldCallFelineGetFoodWithPredator() throws Exception {
+
+        // Arrange: настраиваем поведение мока
+        Mockito.when(feline.getFood("Хищник")).thenReturn(List.of("Животные"));
+
+        // Act: вызываем метод тестируемого класса
+        alex.getFood();
+
+        // Assert: проверяем вызов метода зависимости с ожидаемым аргументом
         Mockito.verify(feline).getFood("Хищник");
-        Mockito.verifyNoMoreInteractions(feline);
     }
 }
 

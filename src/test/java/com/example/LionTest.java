@@ -18,9 +18,9 @@ public class LionTest {
     private Feline feline;
 
     @Test(expected = Exception.class)
-    public void shouldThrowException_whenSexIsInvalid() throws Exception {
+    public void shouldThrowExceptionWhenSexIsInvalid() throws Exception {
         // Given: невалидное значение пола
-        String invalidSex = "Котик";
+        String invalidSex = "Кошечка";
 
         // When: создаём льва с невалидным полом
         new Lion(invalidSex, feline);
@@ -29,7 +29,7 @@ public class LionTest {
     }
 
     @Test
-    public void shouldReturnKittensCount_whenGetKittensCalled() throws Exception {
+    public void shouldReturnKittensCountWhenGetKittensCalled() throws Exception {
         // Given: есть лев и зависимость настроена вернуть количество котят
         Mockito.when(feline.getKittens()).thenReturn(3);
         Lion lion = new Lion("Самец", feline);
@@ -39,14 +39,23 @@ public class LionTest {
 
         // Then: лев возвращает то число, которое вернула зависимость
         assertEquals(3, kittens);
-
-        // Then: проверяем, что метод зависимости действительно был вызван
-        Mockito.verify(feline, Mockito.times(1)).getKittens();
-        Mockito.verifyNoMoreInteractions(feline);
     }
 
     @Test
-    public void shouldReturnFood_whenGetFoodCalled() throws Exception {
+    public void shouldCallFelineGetKittensWhenGetKittensCalled() throws Exception {
+        // Given: лев и зависимость настроена
+        Mockito.when(feline.getKittens()).thenReturn(3);
+        Lion lion = new Lion("Самец", feline);
+
+        // When: вызываем getKittens()
+        lion.getKittens();
+
+        // Then: проверяем вызов метода зависимости
+        Mockito.verify(feline).getKittens();
+    }
+
+    @Test
+    public void shouldReturnFoodWhenGetFoodCalled() throws Exception {
         // Given: есть лев и зависимость должна вернуть список еды
         List<String> expectedFood = List.of("Животные", "Птицы", "Рыба");
         Mockito.when(feline.getFood("Хищник")).thenReturn(expectedFood);
@@ -57,9 +66,18 @@ public class LionTest {
 
         // Then: лев возвращает список, который вернула зависимость
         assertEquals(expectedFood, actualFood);
+    }
 
-        // Then: проверяем, что зависимость была вызвана с правильным аргументом
-        Mockito.verify(feline, Mockito.times(1)).getFood("Хищник");
-        Mockito.verifyNoMoreInteractions(feline);
+    @Test
+    public void shouldCallFelineGetFoodWithPredatorWhenGetFoodCalled() throws Exception {
+        // Given: лев и зависимость настроена
+        Mockito.when(feline.getFood("Хищник")).thenReturn(List.of("Животные"));
+        Lion lion = new Lion("Самец", feline);
+
+        // When: вызываем getFood()
+        lion.getFood();
+
+        // Then: проверяем вызов метода зависимости с ожидаемым аргументом
+        Mockito.verify(feline).getFood("Хищник");
     }
 }

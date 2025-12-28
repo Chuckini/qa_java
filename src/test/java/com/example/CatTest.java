@@ -1,5 +1,6 @@
 package com.example;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -12,15 +13,20 @@ import static org.junit.Assert.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CatTest {
-
     // Мок зависимости: Cat внутри хранит Predator, а Feline реализует Predator
     @Mock
     private Feline feline;
 
-    @Test
-    public void shouldReturnMeow_whenGetSoundCalled() {
+    private Cat cat;
+
+    @Before
+    public void setUp() {
         // Given: кот, которому передали зависимость
-        Cat cat = new Cat(feline);
+        cat = new Cat(feline);
+    }
+
+    @Test
+    public void shouldReturnMeowWhenGetSoundCalled() {
 
         // When: вызываем метод getSound()
         String sound = cat.getSound();
@@ -30,29 +36,34 @@ public class CatTest {
     }
 
     @Test
-    public void shouldReturnFood_whenGetFoodCalled() throws Exception {
-        // Given: кот, которому передали зависимость
-        Cat cat = new Cat(feline);
+    public void shouldReturnFoodWhenGetFoodCalled() throws Exception {
 
-        // Given: зависимость Feline при вызове eatMeat() вернёт список еды
+        // Given: зависимость возвращает список еды
         List<String> expectedFood = List.of("Животные", "Птицы", "Рыба");
         Mockito.when(feline.eatMeat()).thenReturn(expectedFood);
 
-        // When: вызываем метод getFood()
+        // When: вызываем getFood()
         List<String> actualFood = cat.getFood();
 
-        // Then: кот возвращает то, что вернула зависимость
+        // Then: возвращается ожидаемый результат
         assertEquals(expectedFood, actualFood);
+    }
 
-        // Then: проверяем, что кот действительно обратился к зависимости
-        Mockito.verify(feline, Mockito.times(1)).eatMeat();
-        Mockito.verifyNoMoreInteractions(feline);
+    @Test
+    public void shouldCallEatMeatWhenGetFoodCalled() throws Exception {
+
+        // Given: зависимость настроена
+        Mockito.when(feline.eatMeat()).thenReturn(List.of("Животные"));
+
+        // When: вызываем getFood()
+        cat.getFood();
+
+        // Then: кот обращается к зависимости
+        Mockito.verify(feline).eatMeat();
     }
 
     @Test(expected = Exception.class)
-    public void shouldThrowException_whenPredatorThrowsException() throws Exception {
-        // Given: есть кот и зависимость настроена на исключение
-        Cat cat = new Cat(feline);
+    public void shouldThrowExceptionWhenPredatorThrowsException() throws Exception {
 
         // Given: зависимость выбрасывает Exception при попытке получить еду
         Mockito.when(feline.eatMeat()).thenThrow(

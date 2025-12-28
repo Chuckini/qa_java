@@ -1,15 +1,23 @@
 package com.example;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
 public class AnimalTest {
 
+    private Animal animal;
+
+    @Before
+    public void setUp() {
+        // Given: есть Animal
+        animal = new Animal();
+    }
+
     @Test(expected = Exception.class)
-    public void shouldThrowException_whenAnimalKindIsUnknown() throws Exception {
-        // Given: есть Animal и неизвестный вид
-        Animal animal = new Animal();
+    public void shouldThrowExceptionWhenAnimalKindIsUnknown() throws Exception {
+        // Given: неизвестный вид
         String unknownKind = "Птица";
 
         // When: запрашиваем еду по неизвестному виду
@@ -19,9 +27,7 @@ public class AnimalTest {
     }
 
     @Test
-    public void shouldReturnFamily_whenGetFamilyCalled() {
-        // Given: есть Animal
-        Animal animal = new Animal();
+    public void shouldReturnFamilyWhenGetFamilyCalled() {
 
         // When: запрашиваем семейство
         String family = animal.getFamily();

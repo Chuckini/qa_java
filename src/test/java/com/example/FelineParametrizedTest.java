@@ -31,7 +31,7 @@ public class FelineParametrizedTest {
     }
 
     @Test
-    public void shouldReturnSameKittensCount_whenGetKittensWithParamCalled() {
+    public void shouldReturnSameKittensCountWhenGetKittensWithParamCalled() {
         // Given: есть объект Feline
         Feline feline = new Feline();
 
